@@ -24,7 +24,7 @@
     <footer class="footer">フレーズをタップして、旅先の人に見せてみましょう。</footer>
   </main><div class="toast" id="toast" role="status"></div>
   <script>
-  const categories=[['all','すべて'],['basic','基本'],['transport','交通'],['hotel','ホテル'],['food','食事'],['emergency','困ったとき']];
+  const categories=[['all','すべて'],['basic','基本'],['transport','交通'],['hotel','ホテル'],['food','食事'],['shopping','買い物'],['emergency','困ったとき']];
   const phrases=[
     {id:'hello',category:'basic',ja:'こんにちは',en:'Hello.',ko:'안녕하세요.',zh:'你好。',th:'สวัสดีค่ะ/ครับ',pron:{ko:'アンニョンハセヨ',zh:'ニーハオ',th:'サワッディー'}},
     {id:'thanks',category:'basic',ja:'ありがとうございます',en:'Thank you very much.',ko:'정말 감사합니다.',zh:'非常感谢。',th:'ขอบคุณมากค่ะ/ครับ',pron:{ko:'チョンマル カムサハムニダ',zh:'フェイチャン ガンシエ',th:'コープクン マーク'}},
@@ -51,7 +51,25 @@
     {id:'doctor',category:'emergency',ja:'病院に連れて行ってください',en:'Please take me to a hospital.',ko:'병원에 데려다 주세요.',zh:'请带我去医院。',th:'ช่วยพาไปโรงพยาบาลหน่อย',pron:{ko:'ピョンウォネ テリョダ ジュセヨ',zh:'チン ダイ ウォ チュィ イーユエン',th:'チュアイ パー パイ ローンパヤーバーン ノイ'}},
     {id:'police',category:'emergency',ja:'警察を呼んでください',en:'Please call the police.',ko:'경찰을 불러 주세요.',zh:'请帮我叫警察。',th:'ช่วยเรียกตำรวจให้หน่อย',pron:{ko:'キョンチャルル プルロ ジュセヨ',zh:'チン パン ウォ ジャオ ジンチャー',th:'チュアイ リアック タムルアット ハイ ノイ'}},
     {id:'lost',category:'emergency',ja:'道に迷いました',en:'I’m lost.',ko:'길을 잃었어요.',zh:'我迷路了。',th:'ฉันหลงทาง',pron:{ko:'キルル イロッソヨ',zh:'ウォー ミールー ラ',th:'チャン ロンターン'}},
-    {id:'embassy',category:'emergency',ja:'日本大使館に連絡したいです',en:'I’d like to contact the Japanese embassy.',ko:'일본 대사관에 연락하고 싶어요.',zh:'我想联系日本大使馆。',th:'ฉันอยากติดต่อสถานทูตญี่ปุ่น',pron:{ko:'イルボン テサグァネ ヨルラカゴ シポヨ',zh:'ウォー シャン リエンシー リーベン ダーシーグァン',th:'チャン ヤーク ティットー サターントゥート イープン'}}
+    {id:'embassy',category:'emergency',ja:'日本大使館に連絡したいです',en:'I’d like to contact the Japanese embassy.',ko:'일본 대사관에 연락하고 싶어요.',zh:'我想联系日本大使馆。',th:'ฉันอยากติดต่อสถานทูตญี่ปุ่น',pron:{ko:'イルボン テサグァネ ヨルラカゴ シポヨ',zh:'ウォー シャン リエンシー リーベン ダーシーグァン',th:'チャン ヤーク ティットー サターントゥート イープン'}},
+    {id:'no_understand',category:'basic',ja:'よく分かりません',en:'I don’t understand.',ko:'잘 이해하지 못하겠어요.',zh:'我听不懂。',th:'ฉันไม่เข้าใจ'},
+    {id:'slowly',category:'basic',ja:'もう少しゆっくり話してください',en:'Could you speak more slowly?',ko:'조금 더 천천히 말씀해 주시겠어요?',zh:'请说慢一点好吗？',th:'ช่วยพูดช้าลงหน่อยได้ไหม'},
+    {id:'price',category:'shopping',ja:'これはいくらですか？',en:'How much is this?',ko:'이거 얼마예요?',zh:'这个多少钱？',th:'อันนี้ราคาเท่าไร'},
+    {id:'card',category:'shopping',ja:'カードで払えますか？',en:'Can I pay by card?',ko:'카드로 결제할 수 있나요?',zh:'可以刷卡吗？',th:'จ่ายด้วยบัตรได้ไหม'},
+    {id:'receipt',category:'shopping',ja:'レシートをください',en:'Could I have a receipt?',ko:'영수증 주세요.',zh:'请给我收据。',th:'ขอใบเสร็จด้วย'},
+    {id:'taxfree',category:'shopping',ja:'免税になりますか？',en:'Is this tax-free?',ko:'면세가 되나요?',zh:'这个可以免税吗？',th:'อันนี้ขอคืนภาษีได้ไหม'},
+    {id:'platform',category:'transport',ja:'何番ホームから出発しますか？',en:'Which platform does it leave from?',ko:'몇 번 승강장에서 출발하나요?',zh:'从几号站台出发？',th:'ออกจากชานชาลาไหน'},
+    {id:'last_train',category:'transport',ja:'終電は何時ですか？',en:'What time is the last train?',ko:'막차는 몇 시예요?',zh:'末班车是几点？',th:'รถไฟเที่ยวสุดท้ายกี่โมง'},
+    {id:'luggage',category:'hotel',ja:'荷物を預かってもらえますか？',en:'Could you keep my luggage?',ko:'짐을 맡아 주실 수 있나요?',zh:'可以帮我保管行李吗？',th:'ฝากกระเป๋าไว้ได้ไหม'},
+    {id:'late_checkout',category:'hotel',ja:'チェックアウトを遅らせられますか？',en:'Could I check out late?',ko:'늦게 체크아웃해도 될까요?',zh:'可以延迟退房吗？',th:'ขอเช็กเอาต์ช้าได้ไหม'},
+    {id:'vegetarian',category:'food',ja:'この料理はベジタリアン向けですか？',en:'Is this dish vegetarian?',ko:'이 요리는 채식인가요?',zh:'这道菜是素的吗？',th:'อาหารจานนี้เป็นมังสวิรัติไหม'},
+    {id:'still_water',category:'food',ja:'炭酸なしの水をください',en:'Still water, please.',ko:'탄산 없는 물로 주세요.',zh:'请给我不含气的水。',th:'ขอน้ำเปล่าค่ะ/ครับ'},
+    {id:'takeout',category:'food',ja:'持ち帰りにできますか？',en:'Could I get this to go?',ko:'포장해 주실 수 있나요?',zh:'可以帮我打包吗？',th:'ขอห่อกลับได้ไหม'},
+    {id:'separate_bill',category:'food',ja:'別々に会計できますか？',en:'Could we have separate bills?',ko:'따로 계산해 주시겠어요?',zh:'可以分开结账吗？',th:'คิดเงินแยกกันได้ไหม'},
+    {id:'lost_passport',category:'emergency',ja:'パスポートをなくしました',en:'I lost my passport.',ko:'여권을 잃어버렸어요.',zh:'我的护照丢了。',th:'ฉันทำหนังสือเดินทางหาย'},
+    {id:'medicine',category:'emergency',ja:'薬が必要です',en:'I need medicine.',ko:'약이 필요해요.',zh:'我需要药。',th:'ฉันต้องการยา'},
+    {id:'ambulance',category:'emergency',ja:'救急車を呼んでください',en:'Please call an ambulance.',ko:'구급차를 불러 주세요.',zh:'请叫救护车。',th:'กรุณาเรียกรถพยาบาล'},
+    {id:'stolen_wallet',category:'emergency',ja:'財布を盗まれました',en:'My wallet was stolen.',ko:'지갑을 도난당했어요.',zh:'我的钱包被偷了。',th:'กระเป๋าสตางค์ของฉันถูกขโมย'}
   ];
   const extraTranslations={
     hello:{fr:'Bonjour.',es:'Hola.',uz:'Salom!',zhTW:'你好。'},
@@ -79,7 +97,25 @@
     doctor:{fr:'Emmenez-moi à l’hôpital, s’il vous plaît.',es:'Lléveme a un hospital, por favor.',uz:'Iltimos, meni kasalxonaga olib boring.',zhTW:'請帶我去醫院。'},
     police:{fr:'Appelez la police, s’il vous plaît.',es:'Llame a la policía, por favor.',uz:'Iltimos, politsiyani chaqiring.',zhTW:'請幫我叫警察。'},
     lost:{fr:'Je suis perdu(e).',es:'Estoy perdido/a.',uz:'Adashib qoldim.',zhTW:'我迷路了。'},
-    embassy:{fr:'Je voudrais contacter l’ambassade du Japon.',es:'Quiero contactar con la embajada de Japón.',uz:'Yaponiya elchixonasi bilan bog‘lanmoqchiman.',zhTW:'我想聯絡日本大使館。'}
+    embassy:{fr:'Je voudrais contacter l’ambassade du Japon.',es:'Quiero contactar con la embajada de Japón.',uz:'Yaponiya elchixonasi bilan bog‘lanmoqchiman.',zhTW:'我想聯絡日本大使館。'},
+    no_understand:{fr:'Je ne comprends pas.',es:'No entiendo.',uz:'Tushunmayapman.',zhTW:'我聽不懂。'},
+    slowly:{fr:'Pourriez-vous parler plus lentement ?',es:'¿Podría hablar más despacio?',uz:'Iltimos, sekinroq gapiring.',zhTW:'請說慢一點，好嗎？'},
+    price:{fr:'Combien ça coûte ?',es:'¿Cuánto cuesta esto?',uz:'Bu qancha turadi?',zhTW:'這個多少錢？'},
+    card:{fr:'Puis-je payer par carte ?',es:'¿Puedo pagar con tarjeta?',uz:'Karta bilan to‘lasam bo‘ladimi?',zhTW:'可以刷卡嗎？'},
+    receipt:{fr:'Puis-je avoir un reçu ?',es:'¿Me da un recibo, por favor?',uz:'Chekni olsam bo‘ladimi?',zhTW:'請給我收據。'},
+    taxfree:{fr:'Cet article est-il détaxé ?',es:'¿Este artículo está libre de impuestos?',uz:'Bu mahsulot bojsizmi?',zhTW:'這個可以免稅嗎？'},
+    platform:{fr:'De quel quai part-il ?',es:'¿De qué andén sale?',uz:'Qaysi platformadan jo‘naydi?',zhTW:'從幾號月台出發？'},
+    last_train:{fr:'À quelle heure est le dernier train ?',es:'¿A qué hora sale el último tren?',uz:'Oxirgi poyezd soat nechada?',zhTW:'末班車是幾點？'},
+    luggage:{fr:'Pouvez-vous garder mes bagages ?',es:'¿Puede guardar mi equipaje?',uz:'Yukimni saqlab tura olasizmi?',zhTW:'可以幫我保管行李嗎？'},
+    late_checkout:{fr:'Puis-je partir plus tard ?',es:'¿Puedo hacer el check-out más tarde?',uz:'Kechroq chiqib ketsam bo‘ladimi?',zhTW:'可以延遲退房嗎？'},
+    vegetarian:{fr:'Ce plat est-il végétarien ?',es:'¿Este plato es vegetariano?',uz:'Bu taom vegetarianlar uchunmi?',zhTW:'這道菜是素食嗎？'},
+    still_water:{fr:'De l’eau plate, s’il vous plaît.',es:'Agua sin gas, por favor.',uz:'Gazsiz suv, iltimos.',zhTW:'請給我無氣泡的水。'},
+    takeout:{fr:'Puis-je prendre ce plat à emporter ?',es:'¿Me lo puede poner para llevar?',uz:'Olib ketish uchun qadoqlab bera olasizmi?',zhTW:'可以幫我打包嗎？'},
+    separate_bill:{fr:'Peut-on avoir des additions séparées ?',es:'¿Podemos pagar por separado?',uz:'Hisobni alohida qilsak bo‘ladimi?',zhTW:'可以分開結帳嗎？'},
+    lost_passport:{fr:'J’ai perdu mon passeport.',es:'He perdido mi pasaporte.',uz:'Pasportimni yo‘qotib qo‘ydim.',zhTW:'我的護照不見了。'},
+    medicine:{fr:'J’ai besoin de médicaments.',es:'Necesito medicamentos.',uz:'Menga dori kerak.',zhTW:'我需要藥。'},
+    ambulance:{fr:'Appelez une ambulance, s’il vous plaît.',es:'Llame a una ambulancia, por favor.',uz:'Iltimos, tez yordam chaqiring.',zhTW:'請叫救護車。'},
+    stolen_wallet:{fr:'On m’a volé mon portefeuille.',es:'Me han robado la cartera.',uz:'Hamyonimni o‘g‘irlashdi.',zhTW:'我的錢包被偷了。'}
   };
   const translationFor=(phrase,language)=>extraTranslations[phrase.id]?.[language]??phrase[language];
   const languageNames={fr:'フランス語',es:'スペイン語',ko:'韓国語',zh:'中国語（簡体字）',zhTW:'台湾華語（繁体字）',th:'タイ語',uz:'ウズベク語'};
