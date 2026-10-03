@@ -1,0 +1,7 @@
+services:
+  tabiphrase:
+    build: .
+    container_name: tabiphrase
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
