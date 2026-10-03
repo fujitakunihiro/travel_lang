@@ -24,7 +24,7 @@
     <footer class="footer">フレーズをタップして、旅先の人に見せてみましょう。</footer>
   </main><div class="toast" id="toast" role="status"></div>
   <script>
-  const categories=[['all','すべて'],['basic','基本'],['transport','交通'],['hotel','ホテル'],['food','食事'],['shopping','買い物'],['emergency','困ったとき']];
+  const categories=[['all','すべて'],['basic','基本'],['transport','交通'],['airport','空港'],['customs','税関'],['exchange','両替'],['hotel','ホテル'],['food','食事'],['shopping','買い物'],['emergency','困ったとき']];
   const phrases=[
     {id:'hello',category:'basic',ja:'こんにちは',en:'Hello.',ko:'안녕하세요.',zh:'你好。',th:'สวัสดีค่ะ/ครับ',pron:{ko:'アンニョンハセヨ',zh:'ニーハオ',th:'サワッディー'}},
     {id:'thanks',category:'basic',ja:'ありがとうございます',en:'Thank you very much.',ko:'정말 감사합니다.',zh:'非常感谢。',th:'ขอบคุณมากค่ะ/ครับ',pron:{ko:'チョンマル カムサハムニダ',zh:'フェイチャン ガンシエ',th:'コープクン マーク'}},
@@ -33,7 +33,7 @@
     {id:'english',category:'basic',ja:'英語を話せますか？',en:'Do you speak English?',ko:'영어를 하실 수 있나요?',zh:'您会说英语吗？',th:'พูดภาษาอังกฤษได้ไหม',pron:{ko:'ヨンオルル ハシル ス インナヨ',zh:'ニン フイ シュオ インユー マ',th:'プート パーサー アンクリット ダイ マイ'}},
     {id:'help',category:'basic',ja:'手伝ってください',en:'Could you help me, please?',ko:'도와주시겠어요?',zh:'可以帮帮我吗？',th:'ช่วยฉันหน่อยได้ไหม',pron:{ko:'トワジュシゲッソヨ',zh:'クーイー パンパン ウォ マ',th:'チュアイ チャン ノイ ダイ マイ'}},
     {id:'where',category:'transport',ja:'駅はどこですか？',en:'Where is the station?',ko:'역은 어디에 있나요?',zh:'车站在哪里？',th:'สถานีอยู่ที่ไหน',pron:{ko:'ヨグン オディエ インナヨ',zh:'チャージャン ザイ ナーリー',th:'サターニー ユー ティーナイ'}},
-    {id:'airport',category:'transport',ja:'空港へ行きたいです',en:'I’d like to go to the airport.',ko:'공항에 가고 싶어요.',zh:'我想去机场。',th:'ฉันอยากไปสนามบิน',pron:{ko:'コンハンエ カゴ シポヨ',zh:'ウォー シャン チュィ ジーチャン',th:'チャン ヤーク パイ サナームビン'}},
+    {id:'airport',category:'airport',ja:'空港へ行きたいです',en:'I’d like to go to the airport.',ko:'공항에 가고 싶어요.',zh:'我想去机场。',th:'ฉันอยากไปสนามบิน',pron:{ko:'コンハンエ カゴ シポヨ',zh:'ウォー シャン チュィ ジーチャン',th:'チャン ヤーク パイ サナームビン'}},
     {id:'ticket',category:'transport',ja:'この切符を1枚ください',en:'One ticket, please.',ko:'표 한 장 주세요.',zh:'请给我一张票。',th:'ขอตั๋วหนึ่งใบค่ะ/ครับ',pron:{ko:'ピョ ハン ジャン ジュセヨ',zh:'チン ゲイ ウォ イージャン ピャオ',th:'コー トゥア ヌン バイ'}},
     {id:'stop',category:'transport',ja:'ここで止めてください',en:'Please stop here.',ko:'여기서 세워 주세요.',zh:'请在这里停一下。',th:'จอดตรงนี้ค่ะ/ครับ',pron:{ko:'ヨギソ セウォ ジュセヨ',zh:'チン ザイ ジェーリー ティン イーシャー',th:'ジョート トロンニー'}},
     {id:'taxi',category:'transport',ja:'タクシーを呼んでください',en:'Could you call a taxi?',ko:'택시를 불러 주세요.',zh:'请帮我叫一辆出租车。',th:'ช่วยเรียกแท็กซี่ให้หน่อย',pron:{ko:'テクシルル プルロ ジュセヨ',zh:'チン パン ウォ ジャオ チューズーチャー',th:'チュアイ リアック テックシー ハイ ノイ'}},
@@ -71,7 +71,16 @@
     {id:'lost_passport',category:'emergency',ja:'パスポートをなくしました',en:'I lost my passport.',ko:'여권을 잃어버렸어요.',zh:'我的护照丢了。',th:'ฉันทำหนังสือเดินทางหาย'},
     {id:'medicine',category:'emergency',ja:'薬が必要です',en:'I need medicine.',ko:'약이 필요해요.',zh:'我需要药。',th:'ฉันต้องการยา'},
     {id:'ambulance',category:'emergency',ja:'救急車を呼んでください',en:'Please call an ambulance.',ko:'구급차를 불러 주세요.',zh:'请叫救护车。',th:'กรุณาเรียกรถพยาบาล'},
-    {id:'stolen_wallet',category:'emergency',ja:'財布を盗まれました',en:'My wallet was stolen.',ko:'지갑을 도난당했어요.',zh:'我的钱包被偷了。',th:'กระเป๋าสตางค์ของฉันถูกขโมย'}
+    {id:'stolen_wallet',category:'emergency',ja:'財布を盗まれました',en:'My wallet was stolen.',ko:'지갑을 도난당했어요.',zh:'我的钱包被偷了。',th:'กระเป๋าสตางค์ของฉันถูกขโมย'},
+    {id:'checkin_counter',category:'airport',ja:'チェックインカウンターはどこですか？',en:'Where is the check-in counter?',ko:'체크인 카운터가 어디에 있나요?',zh:'值机柜台在哪里？',th:'เคาน์เตอร์เช็กอินอยู่ที่ไหน'},
+    {id:'boarding_gate',category:'airport',ja:'搭乗口はどこですか？',en:'Where is the boarding gate?',ko:'탑승구가 어디에 있나요?',zh:'登机口在哪里？',th:'ประตูขึ้นเครื่องอยู่ที่ไหน'},
+    {id:'baggage_claim',category:'airport',ja:'手荷物受取所はどこですか？',en:'Where is baggage claim?',ko:'수하물 찾는 곳이 어디에 있나요?',zh:'行李提取处在哪里？',th:'จุดรับกระเป๋าอยู่ที่ไหน'},
+    {id:'nothing_to_declare',category:'customs',ja:'申告するものはありません',en:'I have nothing to declare.',ko:'신고할 물건이 없습니다.',zh:'没有需要申报的物品。',th:'ไม่มีสิ่งของต้องสำแดง'},
+    {id:'something_to_declare',category:'customs',ja:'申告するものがあります',en:'I have something to declare.',ko:'신고할 물건이 있습니다.',zh:'有物品需要申报。',th:'มีสิ่งของต้องสำแดง'},
+    {id:'bring_into_country',category:'customs',ja:'これは持ち込めますか？',en:'Can I bring this into the country?',ko:'이걸 반입해도 되나요?',zh:'这个可以带入境吗？',th:'นำสิ่งนี้เข้าประเทศได้ไหม'},
+    {id:'exchange_place',category:'exchange',ja:'両替所はどこですか？',en:'Where can I exchange money?',ko:'환전소가 어디에 있나요?',zh:'哪里可以兑换货币？',th:'แลกเงินได้ที่ไหน'},
+    {id:'exchange_rate',category:'exchange',ja:'為替レートはいくらですか？',en:'What is the exchange rate?',ko:'환율이 얼마예요?',zh:'汇率是多少？',th:'อัตราแลกเปลี่ยนเท่าไร'},
+    {id:'exchange_amount',category:'exchange',ja:'この金額を両替したいです',en:'I’d like to exchange this amount.',ko:'이 금액을 환전하고 싶어요.',zh:'我想兑换这笔金额。',th:'ฉันต้องการแลกเงินจำนวนนี้'}
   ];
   const extraTranslations={
     hello:{fr:'Bonjour.',es:'Hola.',uz:'Salom!',zhTW:'你好。'},
@@ -119,11 +128,21 @@
     lost_passport:{fr:'J’ai perdu mon passeport.',es:'He perdido mi pasaporte.',uz:'Pasportimni yo‘qotib qo‘ydim.',zhTW:'我的護照不見了。'},
     medicine:{fr:'J’ai besoin de médicaments.',es:'Necesito medicamentos.',uz:'Menga dori kerak.',zhTW:'我需要藥。'},
     ambulance:{fr:'Appelez une ambulance, s’il vous plaît.',es:'Llame a una ambulancia, por favor.',uz:'Iltimos, tez yordam chaqiring.',zhTW:'請叫救護車。'},
-    stolen_wallet:{fr:'On m’a volé mon portefeuille.',es:'Me han robado la cartera.',uz:'Hamyonimni o‘g‘irlashdi.',zhTW:'我的錢包被偷了。'}
+    stolen_wallet:{fr:'On m’a volé mon portefeuille.',es:'Me han robado la cartera.',uz:'Hamyonimni o‘g‘irlashdi.',zhTW:'我的錢包被偷了。'},
+    checkin_counter:{fr:'Où se trouve le comptoir d’enregistrement ?',es:'¿Dónde está el mostrador de facturación?',uz:'Ro‘yxatdan o‘tish peshtaxtasi qayerda?',zhTW:'報到櫃檯在哪裡？'},
+    boarding_gate:{fr:'Où se trouve la porte d’embarquement ?',es:'¿Dónde está la puerta de embarque?',uz:'Uchish darvozasi qayerda?',zhTW:'登機門在哪裡？'},
+    baggage_claim:{fr:'Où se trouve la zone de récupération des bagages ?',es:'¿Dónde está la zona de recogida de equipaje?',uz:'Bagaj olish joyi qayerda?',zhTW:'行李提領處在哪裡？'},
+    nothing_to_declare:{fr:'Je n’ai rien à déclarer.',es:'No tengo nada que declarar.',uz:'Deklaratsiya qiladigan narsam yo‘q.',zhTW:'我沒有需要申報的物品。'},
+    something_to_declare:{fr:'J’ai quelque chose à déclarer.',es:'Tengo algo que declarar.',uz:'Deklaratsiya qiladigan narsam bor.',zhTW:'我有物品需要申報。'},
+    bring_into_country:{fr:'Puis-je faire entrer ceci dans le pays ?',es:'¿Puedo introducir esto en el país?',uz:'Buni mamlakatga olib kirish mumkinmi?',zhTW:'這個可以帶入境嗎？'},
+    exchange_place:{fr:'Où puis-je changer de l’argent ?',es:'¿Dónde puedo cambiar dinero?',uz:'Qayerda pul almashtirsam bo‘ladi?',zhTW:'哪裡可以換錢？'},
+    exchange_rate:{fr:'Quel est le taux de change ?',es:'¿Cuál es el tipo de cambio?',uz:'Valyuta kursi qancha?',zhTW:'匯率是多少？'},
+    exchange_amount:{fr:'Je voudrais changer ce montant.',es:'Quisiera cambiar esta cantidad.',uz:'Shu miqdordagi pulni almashtirmoqchiman.',zhTW:'我想兌換這筆金額。'}
   };
   const russianTranslations={
     hello:'Здравствуйте.',thanks:'Большое спасибо.',please:'Пожалуйста.',excuse:'Извините.',english:'Вы говорите по-английски?',help:'Не могли бы вы мне помочь?',where:'Где находится вокзал?',airport:'Мне нужно в аэропорт.',ticket:'Один билет, пожалуйста.',stop:'Остановите здесь, пожалуйста.',taxi:'Вызовите, пожалуйста, такси.',address:'Отвезите меня по этому адресу, пожалуйста.',checkin:'У меня есть бронь.',room:'Пожалуйста, оформите заселение.',wifi:'Какой пароль от Wi-Fi?',checkout:'Во сколько выезд?',menu:'Меню, пожалуйста.',recommend:'Что вы посоветуете?',no_spicy:'Пожалуйста, приготовьте неострое.',bill:'Счёт, пожалуйста.',allergy:'У меня аллергия, я не могу это есть.',bathroom:'Где находится туалет?',doctor:'Отвезите меня в больницу, пожалуйста.',police:'Вызовите полицию, пожалуйста.',lost:'Я не могу найти дорогу.',embassy:'Мне нужно связаться с посольством Японии.',
-    no_understand:'Я не понимаю.',slowly:'Не могли бы вы говорить помедленнее?',price:'Сколько это стоит?',this_please:'Дайте мне, пожалуйста, вот это.',card:'Можно оплатить картой?',contactless:'Можно оплатить бесконтактно?',receipt:'Можно мне чек, пожалуйста?',taxfree:'Это можно оформить такс-фри?',platform:'С какой платформы отправляется поезд?',last_train:'Во сколько отправляется последний поезд?',luggage:'Вы можете присмотреть за моим багажом?',late_checkout:'Можно выехать позже?',vegetarian:'Это блюдо вегетарианское?',still_water:'Воду без газа, пожалуйста.',takeout:'Можно упаковать это с собой?',separate_bill:'Можно разделить счёт?',lost_passport:'Я не могу найти паспорт.',medicine:'Мне нужны лекарства.',ambulance:'Вызовите скорую помощь, пожалуйста.',stolen_wallet:'У меня украли кошелёк.'
+    no_understand:'Я не понимаю.',slowly:'Не могли бы вы говорить помедленнее?',price:'Сколько это стоит?',this_please:'Дайте мне, пожалуйста, вот это.',card:'Можно оплатить картой?',contactless:'Можно оплатить бесконтактно?',receipt:'Можно мне чек, пожалуйста?',taxfree:'Это можно оформить такс-фри?',platform:'С какой платформы отправляется поезд?',last_train:'Во сколько отправляется последний поезд?',luggage:'Вы можете присмотреть за моим багажом?',late_checkout:'Можно выехать позже?',vegetarian:'Это блюдо вегетарианское?',still_water:'Воду без газа, пожалуйста.',takeout:'Можно упаковать это с собой?',separate_bill:'Можно разделить счёт?',lost_passport:'Я не могу найти паспорт.',medicine:'Мне нужны лекарства.',ambulance:'Вызовите скорую помощь, пожалуйста.',stolen_wallet:'У меня украли кошелёк.',
+    checkin_counter:'Где находится стойка регистрации?',boarding_gate:'Где выход на посадку?',baggage_claim:'Где находится зона выдачи багажа?',nothing_to_declare:'Мне нечего декларировать.',something_to_declare:'У меня есть товары для декларирования.',bring_into_country:'Можно ли ввезти это в страну?',exchange_place:'Где можно обменять деньги?',exchange_rate:'Какой курс обмена?',exchange_amount:'Мне нужно обменять эту сумму.'
   };
   const translationFor=(phrase,language)=>language==='ru'?russianTranslations[phrase.id]:(extraTranslations[phrase.id]?.[language]??phrase[language]);
   const languageNames={fr:'フランス語',es:'スペイン語',ru:'ロシア語',ko:'韓国語',zh:'中国語（簡体字）',zhTW:'台湾華語（繁体字）',th:'タイ語',uz:'ウズベク語'};
